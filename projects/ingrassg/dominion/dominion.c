@@ -689,7 +689,7 @@ int getCost(int cardNumber)
 int effectBaron(int choice1, struct gameState *state, int currentPlayer)
 {
     state->numBuys++;//Increase buys by 1!
-        if (choice1 > 0) { //Boolean true or going to discard an estate
+    if (choice1 > 0) { //Boolean true or going to discard an estate
         int p = 0;//Iterator for hand!
         int card_not_discarded = 1;//Flag for discard set!
         while(card_not_discarded) {
@@ -717,7 +717,7 @@ int effectBaron(int choice1, struct gameState *state, int currentPlayer)
                         isGameOver(state);
                     }
                 }
-                card_not_discarded = 0;//Exit the loop
+                //card_not_discarded = 0;//Exit the loop                // ERROR #1 Removing Flag Change  //
             }
 
             else {
@@ -725,13 +725,13 @@ int effectBaron(int choice1, struct gameState *state, int currentPlayer)
             }
         }
     }
-
+    
     else {
         if (supplyCount(estate, state) > 0) {
             gainCard(estate, state, 0, currentPlayer);//Gain an estate
 
             state->supplyCount[estate]--;//Decrement Estates
-            if (supplyCount(estate, state) == 0) {
+            if (supplyCount(estate, state) < 0) {                       // ERROR #2 Negative Estate Possibility //
                 isGameOver(state);
             }
         }
@@ -753,7 +753,7 @@ int effectMinion(int choice1, int choice2, struct gameState *state, int handPos,
 
     if (choice1)
     {
-        state->coins = state->coins + 2;
+        state->coins = state->coins - 2;                                // ERROR #3 Loses Coins Instead //
     }
     else if (choice2)       //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
@@ -785,7 +785,7 @@ int effectMinion(int choice1, int choice2, struct gameState *state, int handPos,
                     //draw 4
                     for (j = 0; j < 4; j++)
                     {
-                        drawCard(i, state);
+                        drawCard(j, state);                             // ERROR #4 Using Incorrect Counter //
                     }
                 }
             }
@@ -800,7 +800,7 @@ int effectAmbassador(int choice1, int choice2, struct gameState *state, int hand
     int i;
     int j = 0;      //used to check if player has enough cards to discard
 
-    if (choice2 > 2 || choice2 < 0)
+    if (choice2 > 2 && choice2 < 0)                                     // ERROR #5 Incorrect use of && Operator //
     {
         return -1;
     }
@@ -826,7 +826,7 @@ int effectAmbassador(int choice1, int choice2, struct gameState *state, int hand
         printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][choice1]);
 
     //increase supply count for choosen card by amount being discarded
-    state->supplyCount[state->hand[currentPlayer][choice1]] += choice2;
+    state->supplyCount[state->hand[currentPlayer][choice1]] += choice1; // ERROR #6 Incorrect Choice Number //
 
     //each other player gains a copy of revealed card
     for (i = 0; i < state->numPlayers; i++)
@@ -880,7 +880,7 @@ int effectTribute(struct gameState *state, int currentPlayer, int nextPlayer)
     }
     else
     {
-        if (state->deckCount[nextPlayer] == 0) {
+        if (state->deckCount[currentPlayer] == 0) {                     // ERROR #7 Wrong Player //
             for (i = 0; i < state->discardCount[nextPlayer]; i++) {
                 state->deck[nextPlayer][i] = state->discard[nextPlayer][i];//Move to deck
                 state->deckCount[nextPlayer]++;
@@ -915,7 +915,7 @@ int effectTribute(struct gameState *state, int currentPlayer, int nextPlayer)
             drawCard(currentPlayer, state);
         }
         else { //Action Card
-            state->numActions = state->numActions + 2;
+            state->numActions = state->numActions - 2;                  // ERROR #8 Incorrect Subtraction of Actions //
         }
     }
 
@@ -927,7 +927,7 @@ int effectMine(int choice1, int choice2, struct gameState *state, int handPos, i
     int i;
     int j = state->hand[currentPlayer][choice1];  //store card we will trash
 
-    if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
+    if (state->hand[currentPlayer][choice1] > copper || state->hand[currentPlayer][choice1] < gold)  // ERROR #9 Incorrect Inequality //
     {
         return -1;
     }
@@ -950,7 +950,7 @@ int effectMine(int choice1, int choice2, struct gameState *state, int handPos, i
     //discard trashed card
     for (i = 0; i < state->handCount[currentPlayer]; i++)
     {
-        if (state->hand[currentPlayer][i] == j)
+        if (state->hand[currentPlayer][i] == i)                         // ERROR #10 Wrong Counter //
         {
             discardCard(i, currentPlayer, state, 0);
             break;
