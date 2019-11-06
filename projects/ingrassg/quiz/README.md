@@ -1,6 +1,6 @@
 # To compile and run testme, enter:
 ```bash
-make testme
+make
 ```
 ```bash
 make run
