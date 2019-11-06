@@ -1,3 +1,3 @@
-#To compile and run test enter:
+# To compile and run test enter:
 make testme
 make run
