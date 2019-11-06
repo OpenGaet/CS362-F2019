@@ -1,3 +1,3 @@
 # To compile and run testme, enter:
-make testme
-make run
+## make testme
+## make run
