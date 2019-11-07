@@ -717,7 +717,9 @@ int effectBaron(int choice1, struct gameState *state, int currentPlayer)
                         isGameOver(state);
                     }
                 }
-                //card_not_discarded = 0;//Exit the loop                // ERROR #1 Removing Flag Change  //
+		printf("FAILED: Dominion would have gotten stuck in an infinite loop due to the error\n");
+		printf("I created here. So I fixed it but put this comment here to represent it.\n");
+                card_not_discarded = 0;//Exit the loop                // ERROR #1 Removing Flag Change  //
             }
 
             else {
@@ -727,11 +729,11 @@ int effectBaron(int choice1, struct gameState *state, int currentPlayer)
     }
     
     else {
-        if (supplyCount(estate, state) > 0) {
+        if (supplyCount(estate, state) >= 0){				// ERROR #2 Negative Estate Possibility //
             gainCard(estate, state, 0, currentPlayer);//Gain an estate
 
             state->supplyCount[estate]--;//Decrement Estates
-            if (supplyCount(estate, state) < 0) {                       // ERROR #2 Negative Estate Possibility //
+            if (supplyCount(estate, state) < 0) {                       // ERROR #2 Continued //
                 isGameOver(state);
             }
         }
