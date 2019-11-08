@@ -9,9 +9,9 @@
 
 void confirm (int passed) {
 	if (passed == 1)
-		printf("PASSED\n");
+		printf("PASSED: ");
 	else
-		printf("FAILED\n");
+		printf("FAILED: ");
 }
 
 
@@ -47,11 +47,11 @@ int main() {
 	G.coins += 4;//Add 4 coins to the amount of coins
     	G.handCount[thisPlayer]--;
 
-	printf("coins = %d, expected = %d\n", testG.coins, G.coins);
 	confirm(testG.coins == G.coins);
-	printf("Hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+	printf("coins = %d, expected = %d\n", testG.coins, G.coins);
 	confirm(testG.handCount[thisPlayer] == G.handCount[thisPlayer]);
-	
+	printf("Hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+		
 
 	// ----------- TEST 2: Player Does Not Have Estate Card but There are None to Get --------------
 	printf("\n-- TEST 2: Player Does Not Have Estate Card --\n");
@@ -75,13 +75,13 @@ int main() {
 	effectBaron(choice1, &testG, thisPlayer);
 	discardCard(0, thisPlayer, &G, 0);
 
-	printf("coins = %d, expected = %d\n", testG.coins, G.coins);
 	confirm(testG.coins == G.coins);
-	printf("Hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+	printf("coins = %d, expected = %d\n", testG.coins, G.coins);
 	confirm(testG.handCount[thisPlayer] == G.handCount[thisPlayer]);
-	printf("Is Game Over = %d, expected = %d\n", isGameOver(&testG), isGameOver(&G));
+	printf("Hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
 	confirm(isGameOver(&testG) == isGameOver(&G));
-
+	printf("Is Game Over = %d, expected = %d\n", isGameOver(&testG), isGameOver(&G));
+	
 	// ----------- TEST 3: No Estate Card but Tries to Discard One --------------
 
 	printf("\n-- TEST 3: Player Does Not Have an Estate Card but Tries to Discard One --\n");
@@ -100,6 +100,9 @@ int main() {
 	choice1 = 1;
 	effectBaron(choice1, &testG, thisPlayer);
 	
+	confirm(testG.handCount[thisPlayer] == G.handCount[thisPlayer]);
+	printf("Hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+
 	printf("\n >>>>> Testing complete <<<<<\n\n");
 
 	return 0;
