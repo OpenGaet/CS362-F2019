@@ -814,7 +814,7 @@ int effectAmbassador(int choice1, int choice2, struct gameState *state, int hand
 
     for (i = 0; i < state->handCount[currentPlayer]; i++)
     {
-        if (i != handPos && i == state->hand[currentPlayer][choice1] && i != choice1)
+        if (i != handPos && state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1] /*&& i != choice1*/) // fixed existing error
         {
             j++;
         }
@@ -907,7 +907,10 @@ int effectTribute(struct gameState *state, int currentPlayer, int nextPlayer)
         tributeRevealedCards[1] = -1;
     }
 
-    for (i = 0; i <= 2; i ++)
+    // TESTER
+    //printf("trib1: %d.  trib2: %d\n", tributeRevealedCards[0], tributeRevealedCards[1]);
+
+    for (i = 0; i < 2; i ++)  // Corrected built in error here that made it loop thrice
     {
         if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold) { //Treasure cards
             state->coins += 2;
@@ -931,7 +934,9 @@ int effectMine(int choice1, int choice2, struct gameState *state, int handPos, i
 
     if (state->hand[currentPlayer][choice1] > copper || state->hand[currentPlayer][choice1] < gold)  // ERROR #9 Incorrect Inequality //
     {
-        return -1;
+        //return -1;
+	printf("FAILED: Dominion would have exited here with -1 for every function call due to the error\n");
+	printf("I created here. So I fixed it but put this comment here to represent it.\n");
     }
 
     if (choice2 > treasure_map || choice2 < curse)
