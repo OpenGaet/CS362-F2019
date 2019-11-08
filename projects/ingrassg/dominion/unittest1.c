@@ -54,7 +54,7 @@ int main() {
 		
 
 	// ----------- TEST 2: Player Does Not Have Estate Card but There are None to Get --------------
-	printf("\n-- TEST 2: Player Does Not Have Estate Card --\n");
+	printf("\n-- TEST 2: Player Does Not Have Estate Card but there are none in supply --\n");
 
 	// initialize a game state and player cards
 	initializeGame(numPlayers, k, seed, &G);
