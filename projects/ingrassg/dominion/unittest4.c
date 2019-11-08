@@ -121,7 +121,7 @@ int main() {
 	printf("Hand Count = %d, Expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
 
 
-	// ----------- TEST 3: Trying to choose 3 of the available copies --------------
+	// ----------- TEST 3: More than one card in deck --------------
 	printf("\n-- TEST 3: More than 1 card in deck --\n");
 
 	// initialize a game state and player cards
@@ -170,6 +170,53 @@ int main() {
 	confirm(testG.handCount[nextP] == G.handCount[nextP]);
 	printf("Hand Count = %d, Expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
 
+
+	// ----------- TEST 4: Discards action card --------------
+	printf("\n-- TEST 4: Discards an action card --\n");
+
+	// initialize a game state and player cards
+	initializeGame(numPlayers, k, seed, &G);
+
+	// Set player hand
+	G.hand[thisPlayer][0] = tribute;
+	G.hand[thisPlayer][1] = smithy;
+	G.hand[thisPlayer][2] = smithy;
+	G.hand[thisPlayer][3] = baron;
+	G.hand[thisPlayer][4] = feast;
+
+	// Set opponent hand
+	G.handCount[nextP] = 5;
+	G.hand[nextP][0] = minion;
+	G.hand[nextP][1] = copper;
+	G.hand[nextP][2] = duchy;
+	G.hand[nextP][3] = feast;
+	G.hand[nextP][4] = estate;
+
+	// Set discard count and deck count
+	G.discardCount[nextP] = 2;
+	G.deckCount[nextP] = 2;
+	G.deckCount[thisPlayer] = 2;
+	G.numActions = 0;
+
+	// Set deck
+	G.deck[nextP][0] = copper;
+	G.deck[nextP][1] = smithy;
+
+	// copy the game state to a test case
+	memcpy(&testG, &G, sizeof(struct gameState));
+	effectTribute(&testG, thisPlayer, nextP);
+	G.deckCount[nextP] -= 2;
+	G.coins += 2;
+	G.numActions += 2;	
+	
+	confirm(testG.discardCount[nextP] == G.discardCount[nextP]);
+	printf("Next Player Deck Count = %d, Expected = %d\n", testG.deckCount[nextP], G.deckCount[nextP]);
+	confirm(testG.coins == G.coins);
+	printf("Coins = %d, Expected = %d\n", testG.coins, G.coins);
+	confirm(testG.numActions == G.numActions);
+	printf("Number of Actions = %d, Expected = %d\n", testG.numActions, G.numActions);
+	confirm(testG.handCount[nextP] == G.handCount[nextP]);
+	printf("Hand Count = %d, Expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
 
 	printf("\n >>>>> Testing complete <<<<<\n\n");
 
