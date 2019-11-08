@@ -893,10 +893,10 @@ int effectTribute(struct gameState *state, int currentPlayer, int nextPlayer)
             shuffle(nextPlayer,state);//Shuffle the deck
         }
         tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
-        state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
+        state->deck[nextPlayer][state->deckCount[nextPlayer]-1] = -1; // built in bug - fixed - was '--' now '- 1'
         state->deckCount[nextPlayer]--;
         tributeRevealedCards[1] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
-        state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
+        state->deck[nextPlayer][state->deckCount[nextPlayer]-1] = -1; // built in bug - fixed - was '--' now '- 1'
         state->deckCount[nextPlayer]--;
     }
 
