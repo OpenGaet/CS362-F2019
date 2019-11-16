@@ -46,14 +46,14 @@ int main() {
 		// initialize a game state and player cards
 		initializeGame(numPlayers, k, seed, &G);
 		// Set player hand
-		G.handCount[thisPlayer] = rand () % 5;
+		G.handCount[thisPlayer] = rand () % 6;
 		G.hand[thisPlayer][0] = tribute;
 		G.hand[thisPlayer][1] = randCard();
 		G.hand[thisPlayer][2] = randCard();
 		G.hand[thisPlayer][3] = randCard();
 		G.hand[thisPlayer][4] = randCard();
 		// Set opponent hand
-		G.handCount[nextP] = rand () % 5;
+		G.handCount[nextP] = rand () % 6;
 		G.hand[nextP][0] = randCard();
 		G.hand[nextP][1] = randCard();
 		G.hand[nextP][2] = randCard();
@@ -69,14 +69,12 @@ int main() {
 		G.deck[nextP][1] = randCard();
 		G.deck[nextP][2] = randCard();
 		G.deck[nextP][3] = randCard();
-		G.deck[nextP][4] = randCard();
 		// Set discard
 		G.discard[nextP][0] = randCard();
 		G.discard[nextP][1] = randCard();
 		G.discard[nextP][2] = randCard();
 		G.discard[nextP][3] = randCard();
-		G.discard[nextP][4] = randCard();
-	
+			
 		// copy the game state to a test case
 		memcpy(&testG, &G, sizeof(struct gameState));
 		effectTribute(&testG, thisPlayer, nextP);
