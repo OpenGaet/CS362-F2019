@@ -47,17 +47,18 @@ int main() {
 		// initialize a game state and player cards
 		initializeGame(numPlayers, k, seed, &G);
 		// Randomize player hand
-		G.handCount[thisPlayer] = 2;
+		G.handCount[thisPlayer] = rand() % 5;
 		G.hand[thisPlayer][0] = baron;
 		G.hand[thisPlayer][1] = randCard();
 		G.hand[thisPlayer][2] = randCard();
 		G.hand[thisPlayer][3] = randCard();
+		G.hand[thisPlayer][4] = randCard();
 		// Randomize choice
 		choice1 = rand() % 2;
 		// Randomize supply count
-		G.supplyCount[estate] = rand() % 2;
-		G.supplyCount[duchy] = rand() % 2;
-		G.supplyCount[copper] = rand() % 2;
+		G.supplyCount[estate] = rand() % 3;
+		G.supplyCount[duchy] = rand() % 3;
+		G.supplyCount[copper] = rand() % 3;
 		// copy the game state to a test case
 		memcpy(&testG, &G, sizeof(struct gameState));
 		effectBaron(choice1, &testG, thisPlayer);

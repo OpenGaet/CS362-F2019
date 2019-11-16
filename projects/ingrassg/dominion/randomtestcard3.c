@@ -34,7 +34,6 @@ int main() {
 	struct gameState G, testG;
 	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
 			sea_hag, tribute, smithy, council_room};
-
 	
 	printf("----------------- Testing Tribute: ----------------\n");
 
@@ -47,19 +46,21 @@ int main() {
 		// initialize a game state and player cards
 		initializeGame(numPlayers, k, seed, &G);
 		// Set player hand
+		G.handCount[thisPlayer] = rand () % 5;
 		G.hand[thisPlayer][0] = tribute;
 		G.hand[thisPlayer][1] = randCard();
 		G.hand[thisPlayer][2] = randCard();
 		G.hand[thisPlayer][3] = randCard();
 		G.hand[thisPlayer][4] = randCard();
 		// Set opponent hand
-		G.handCount[nextP] = 5;
+		G.handCount[nextP] = rand () % 5;
 		G.hand[nextP][0] = randCard();
 		G.hand[nextP][1] = randCard();
 		G.hand[nextP][2] = randCard();
 		G.hand[nextP][3] = randCard();
 		G.hand[nextP][4] = randCard();
 		// Set discard count and deck count
+		G.deckCount[thisPlayer] = rand() % 5;
 		G.discardCount[nextP] = rand() % 5;
 		G.deckCount[nextP] = rand() % 5;
 		G.numActions = 0;
