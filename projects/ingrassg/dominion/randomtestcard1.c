@@ -47,7 +47,7 @@ int main() {
 		// initialize a game state and player cards
 		initializeGame(numPlayers, k, seed, &G);
 		// Randomize player hand
-		G.handCount[thisPlayer] = rand() % 5;
+		G.handCount[thisPlayer] = rand() % 6;
 		G.hand[thisPlayer][0] = baron;
 		G.hand[thisPlayer][1] = randCard();
 		G.hand[thisPlayer][2] = randCard();
