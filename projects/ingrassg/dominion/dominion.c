@@ -693,7 +693,7 @@ int effectBaron(int choice1, struct gameState *state, int currentPlayer)
         int p = 0;//Iterator for hand!
         int card_not_discarded = 1;//Flag for discard set!
         while(card_not_discarded) {
-            if (state->hand[currentPlayer][p] == estate) { //Found an estate card!
+	    if (state->hand[currentPlayer][p] == estate) { //Found an estate card!
                 state->coins += 4;//Add 4 coins to the amount of coins
                 state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][p];
                 state->discardCount[currentPlayer]++;
@@ -717,7 +717,8 @@ int effectBaron(int choice1, struct gameState *state, int currentPlayer)
                         isGameOver(state);
                     }
                 }
-                //card_not_discarded = 0;//Exit the loop                // ERROR #1 Removing Flag Change  //
+                card_not_discarded = 0;//Exit the loop                // ERROR #1 Removing Flag Change  //
+		printf("ERROR: I represent introduced error 1\n");
             }
 
             else {
